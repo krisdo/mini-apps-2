@@ -6,7 +6,9 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "server": "json-server --watch ./data/db.json"
+    "server": "json-server --watch ./data/db.json --static public",
+    "static": "json-server --static public",
+    "react": "webpack -d --watch"
   },
   "dependencies": {
     "react": "^16.13.1",
