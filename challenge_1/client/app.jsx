@@ -11,29 +11,36 @@ const App = (props) => {
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
     const [offset, setOffset] = useState(0);
+    const [keyword, setKeyword] = useState('');
 
     const search = (keyword) => {
+        setKeyword(keyword);
+    };
+
+    const handlePageClick = ({ selected }) => {
+        console.log(selected);
+        setCurrentPage(selected);
+        setOffset(offset)
+    };
+
+    const getData = (keyword) => {
         
         axios.get(`/events?_page=${currentPage}&q=${keyword}`)
         .then( ({ data, headers }) => {
-            let totalPages = JSON.parse(headers['x-total-count']);
+            console.log(data);
+            let totalPages = JSON.parse(headers['x-total-count']) / 10;
             setPageCount(totalPages);
             setData(data);
         })
         .catch( (error) => {
             //TODO: handle error?
             console.log(error);
+            alert('Please Search Again');
         })
-    };
+    }
+    useEffect( () => (keyword ? getData(keyword) : undefined ), [keyword]);
+    // useEffect( () => getData(keyword), [currentPage]);
 
-    const handlePageClick = (data) => {
-        
-    
-        setOffset(offset)
-        // , () => {
-        //   this.loadCommentsFromServer();
-        // });
-      };
 
     
     return (
