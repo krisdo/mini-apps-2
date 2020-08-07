@@ -1,46 +1,66 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import SearchForm from './SearchForm.jsx'
+import SearchForm from './SearchForm.jsx';
+import Results from './Results.jsx';
+import ReactPaginate from 'react-paginate';
 
-class App extends React.Component {
+const App = (props) => {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            data: null
-        }
-        this.search.bind(this);
-    }
+    const [data, setData] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [offset, setOffset] = useState(0);
 
-    search(keyword) {
+    const search = (keyword) => {
         
-        axios.get(`/events?q=${keyword}`)
-        .then( ({data}) => {
-            console.log(data);
-            this.setState({data});
+        axios.get(`/events?_page=${currentPage}&q=${keyword}`)
+        .then( ({ data, headers }) => {
+            let totalPages = JSON.parse(headers['x-total-count']);
+            setPageCount(totalPages);
+            setData(data);
         })
         .catch( (error) => {
             //TODO: handle error?
             console.log(error);
         })
-    }
+    };
 
-    componentDidMount(){
-
-    }
+    const handlePageClick = (data) => {
+        
     
-    render() {
-        return(
+        setOffset(offset)
+        // , () => {
+        //   this.loadCommentsFromServer();
+        // });
+      };
+
+    
+    return (
             <div>
                 
-                    <h1>Historical Events Finder</h1>
-              
-                    <SearchForm search={this.search}/>
-                
+            <h1>Historical data Finder</h1>
+        
+            <SearchForm search={search}/>
+            {data && data.length > 0 ?
+                <Results data={data}/> : null}
+            {pageCount > 1 ?
+                <ReactPaginate
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={'active'}/>
+                : null }
             </div>
         )
-    }
+ 
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'));
