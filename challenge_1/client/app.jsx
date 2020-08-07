@@ -9,8 +9,7 @@ const App = (props) => {
 
     const [data, setData] = useState([]);
     const [pageCount, setPageCount] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [offset, setOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
     const [keyword, setKeyword] = useState('');
 
     const search = (keyword) => {
@@ -19,8 +18,7 @@ const App = (props) => {
 
     const handlePageClick = ({ selected }) => {
         console.log(selected);
-        setCurrentPage(selected);
-        setOffset(offset)
+        setCurrentPage(selected + 1);
     };
 
     const getData = (keyword) => {
@@ -28,7 +26,7 @@ const App = (props) => {
         axios.get(`/events?_page=${currentPage}&q=${keyword}`)
         .then( ({ data, headers }) => {
             console.log(data);
-            let totalPages = JSON.parse(headers['x-total-count']) / 10;
+            let totalPages = Math.ceil(JSON.parse(headers['x-total-count']) / 10);
             setPageCount(totalPages);
             setData(data);
         })
@@ -38,33 +36,31 @@ const App = (props) => {
             alert('Please Search Again');
         })
     }
-    useEffect( () => (keyword ? getData(keyword) : undefined ), [keyword]);
-    // useEffect( () => getData(keyword), [currentPage]);
 
+    useEffect( () => (keyword ? getData(keyword) : undefined), [keyword]);
 
-    
+    useEffect( () => (keyword ? getData(keyword) : undefined), [currentPage]);
+
     return (
             <div>
-                
-            <h1>Historical data Finder</h1>
-        
-            <SearchForm search={search}/>
-            {data && data.length > 0 ?
-                <Results data={data}/> : null}
-            {pageCount > 1 ?
-                <ReactPaginate
-                    previousLabel={'previous'}
-                    nextLabel={'next'}
-                    breakLabel={'...'}
-                    breakClassName={'break-me'}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName={'pagination'}
-                    subContainerClassName={'pages pagination'}
-                    activeClassName={'active'}/>
-                : null }
+                <h1>Historical data Finder</h1>
+                <SearchForm search={search}/>
+                {data && data.length > 0 ?
+                    <Results data={data}/> : null}
+                {pageCount > 1 ?
+                    <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageClick}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}/>
+                    : null }
             </div>
         )
  
