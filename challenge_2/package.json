@@ -4,7 +4,7 @@
   "description": "Cryptocurrency Charting Tool",
   "main": "./server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node ./server/server.js",
     "server": "nodemon ./server/server.js",
     "react": "webpack -d --watch"
@@ -25,6 +25,10 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.3",
+    "jest": "^26.2.2",
+    "react-test-renderer": "^16.13.1",
     "semantic-ui-react": "^1.1.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
