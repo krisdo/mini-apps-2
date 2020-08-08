@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import ReactDOM from 'react-dom';
+import React, {useState, useEffect, createRef} from 'react';
 import axios from 'axios';
 import SearchForm from './SearchForm.jsx';
 import Results from './Results.jsx';
 import ReactPaginate from 'react-paginate';
+import { Header, Container, Sticky} from 'semantic-ui-react'
 
 const App = (props) => {
+
+    let contextRef = createRef();
 
     const [data, setData] = useState([]);
     const [pageCount, setPageCount] = useState(0);
@@ -42,28 +44,52 @@ const App = (props) => {
     useEffect( () => (keyword ? getData(keyword) : undefined), [currentPage]);
 
     return (
-            <div>
-                <h1>Historical data Finder</h1>
-                <SearchForm search={search}/>
-                {data && data.length > 0 ?
-                    <Results data={data}/> : null}
-                {pageCount > 1 ?
-                    <ReactPaginate
-                        previousLabel={'previous'}
-                        nextLabel={'next'}
-                        breakLabel={'...'}
-                        breakClassName={'break-me'}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={5}
-                        onPageChange={handlePageClick}
-                        containerClassName={'pagination'}
-                        subContainerClassName={'pages pagination'}
-                        activeClassName={'active'}/>
-                    : null }
+        <div ref={contextRef}>
+            <Sticky context={contextRef} attached='top'>
+                <Header as='h2' textAlign='center' style={{backgroundColor: '#588ed1', padding: '20px'}}>Historical Data Finder</Header>
+            </Sticky>
+            <Sticky context={contextRef} offset={70} style={{textAlign: 'right', marginRight: '15px'}}>
+                    <SearchForm search={search} style={{float: 'right'}}/>
+            </Sticky>
+                <Container textAlign='center'>
+                    {pageCount > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages pagination'}
+                            activeClassName={'active'}/>
+                        : null }
+                </Container>
+                <Container>
+                    {data && data.length > 0 ?
+                        <Results data={data}/> : null}
+                </Container>
+                <Container textAlign='center'>
+                    {pageCount > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages pagination'}
+                            activeClassName={'active'}/>
+                        : null }
+                </Container>
             </div>
         )
  
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+export default App;

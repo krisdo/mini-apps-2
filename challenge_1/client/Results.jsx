@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-
+import { Card } from 'semantic-ui-react';
 
 const Results = props => {
 
@@ -23,10 +23,16 @@ const Results = props => {
     <div>
     {props.data.map( ({ date, description }) => {
       return (
-        <section>
-          <h3>{formatDate(date)}</h3>
-          <p>{description}</p>
-        </section>
+        <Card fluid color='blue' >
+          <Card.Content>
+            <Card.Header>
+              {formatDate(date)}
+            </Card.Header>
+            <Card.Description>
+              {description}
+            </Card.Description>
+          </Card.Content>
+        </Card>
       )
     })}
     </div>
