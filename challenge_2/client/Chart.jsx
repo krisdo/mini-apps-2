@@ -1,5 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import { Table } from 'semantic-ui-react';
 
 const Chart = ({dates, bpi}) => {
 
@@ -12,20 +13,20 @@ const Chart = ({dates, bpi}) => {
         fill: false,
         // lineTension: 4,
         backgroundColor: 'rgba(75,192,192,1)',
-        borderColor: 'rgba(0,0,0,1)',
+        borderColor: 'rgba(88,207,209,1)',
         borderWidth: 2
       }
     ]
   }
 
   return(
-    <figure>
+    <figure style={{border: '1px solid #6f807e'}}>
       <Line 
         data={dataParams}
         options={{
           title:{
             display:true,
-            text: 'Annual Bitcoin Price Index',
+            text: 'Bitcoin Price Index',
             fontSize: 20
           },
         legend: {
@@ -36,6 +37,7 @@ const Chart = ({dates, bpi}) => {
       />
       <figcaption>Powered by CoinDesk</figcaption>
     </figure>
+  
   )
 
 }

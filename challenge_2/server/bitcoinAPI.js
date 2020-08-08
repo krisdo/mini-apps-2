@@ -7,9 +7,10 @@ var loadBPIData = (start, end) => {
   .then( ({ data }) => {
     return data.bpi;
   })
-  .catch( (data) => {
-    console.log('Cannot Fetch BPI data');
-  })
+  // .catch( (err) => {
+  //   return err;
+  //   console.log('Cannot Fetch BPI data');
+  // })
 
 };
 

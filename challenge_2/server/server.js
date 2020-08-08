@@ -14,13 +14,16 @@ app.listen(port, () => {
 app.get('/data', (req, res) => {
    //2013-09-01
   //2013-09-05
-  loadBPIData('2013-09-01', '2013-09-05')
+  console.log(req.query);
+  const start = req.query.startDate;
+  const end = req.query.endDate;
+  loadBPIData(start, end)
   .then( (data) => {
     res.status(200);
     res.send(data);
   })
   .catch( (error) => {
     res.status(400);
-    console.log(error);
+    res.send('Sorry, but your specified start date is invalid. Format is YYYY-MM-DD. Please check and try again.')
   });
 })
