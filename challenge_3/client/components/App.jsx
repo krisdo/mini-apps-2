@@ -75,7 +75,7 @@ const App = (props) => {
       <div>
         Click on the Number of Pins That Were Knocked Down
         <div>{scores.map( (val, i) => 
-        <NumberOfPins key={i} id={i} disableButton={10-currentScore<i || turn > 2 || currentScore === 10} calculateScore={calculateScore}/>) }
+        <NumberOfPins key={i*10} id={i} disableButton={10-currentScore<i || turn > 2 || currentScore === 10} calculateScore={calculateScore}/>) }
         </div>
         <ScoreBoard id={points()} totalScore={totalScore} scores={scores}/>
       </div>
