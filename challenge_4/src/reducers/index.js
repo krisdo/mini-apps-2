@@ -19,7 +19,8 @@ const gameplayReducer = (state = initialState, action) => {
       return {
         ...state,
         boardInitialized,
-        board
+        board,
+        isGameOver: false
       };
     }
     case types.CLICK_TILE: {

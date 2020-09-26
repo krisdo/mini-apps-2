@@ -4,11 +4,10 @@ import { bindActionCreators } from 'redux';
 import Tile from './Tile.js';
 import * as allActions from '../actions';
 import GameOver from './GameOver';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import Container from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
+import Modal from './Modal';
 
 const customRowStyle = { 
   width: "5px",
@@ -57,7 +56,7 @@ class Board extends Component {
   
     return board.map( (row, index) => {
 
-      return < TableRow key={'row' + index} style={customRowStyle}>{row.map(tile => this.addTile(tile))}</TableRow>
+      return < tr key={'row' + index} style={customRowStyle}>{row.map(tile => this.addTile(tile))}</tr>
 
     });
   
@@ -68,13 +67,14 @@ class Board extends Component {
     const { hasWon, isGameOver } = this.props;
     return (
       <Container >
-        <Table className='board'>
+        <Table className='board' style={{margin: "30px"}}>
          <TableBody>
         {this.renderBoard()}
         </TableBody>
       </Table>
       { isGameOver ?
-      <GameOver hasWon={hasWon} reset={this.reset}/> : null}
+     
+      <Modal isGameOver={isGameOver} hasWon={hasWon} reset={this.reset}/> : null }
       </Container>
     );
   }

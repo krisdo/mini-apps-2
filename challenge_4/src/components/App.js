@@ -1,15 +1,15 @@
 import React from 'react';
 import Board from './Board.js';
-import { Typography } from '@material-ui/core';
+import { Typography, Container } from '@material-ui/core';
 
 const App = () => (
 
-    <div className="Minesweeper">
+    <Container className="Minesweeper" alignContent='center' justify="center" maxWidth="md">
       <Typography variant="h3" className="Minesweeper-header">
         Let's Play Minesweeper
       </Typography>
       <Board/>
-    </div>
+    </Container>
 );
 
 export default App;

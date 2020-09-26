@@ -4,11 +4,14 @@ import App from './components/App.js';
 import { Provider } from "react-redux";
 import store from "./store/index.js";
 import * as serviceWorker from './serviceWorker';
+import { Typography, Container } from '@material-ui/core';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+      <Container madWidth='md'>
+      <App />
+    </Container>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

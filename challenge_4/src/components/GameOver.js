@@ -1,19 +1,25 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-const GameOver = ({ hasWon, reset}) => (
+const GameOver = ({ hasWon, reset, close}) => {
+
+  const restart = () => {
+    reset()
+    close()
+
+  }
  
+  return (
     <div className="gameover-msg">
-    <header>GAME OVER</header> 
-    
-      {hasWon ?
+       {hasWon ?
         <span> WINNER! YOU WON! </span> : 
         <span> YOU LOST! </span> }
 
-      <div>
-      <Button onClick={reset} color="secondary"> New Game </Button>
-      </div>
+      <p style={{margin: "20px"}}>
+      <Button onClick={restart} variant='contained' color="secondary"> New Game </Button>
+      </p>
       </div> 
-)
+  )
+}
  
 export default GameOver;
