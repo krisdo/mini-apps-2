@@ -65,46 +65,6 @@ class App extends React.Component {
   }
 }
 
-//   getTotalScorePerFrame(array) {
-
-//     let scoreboard = array.slice(0, 10);
-
-//      return scoreboard.map( (frame, index, arr) => {
-//       let score = 0;
-
-//       if (frame[0] === 10) { //first strike
-//         score = 10;
-//         if(index === 9) { //first strike is in 10th frame
-//           if (frame[1] === 10) { //2nd strike
-//             score = score + 10 + frame[2]; //add all 3 shots in 10th frame
-//           } else {
-//             score = score + frame[1]; //add only 2nd shot in 10th frame
-//           }
-//         } else {
-//           if (arr[index+1][0] === 10) { //2nd strike then add the 3rd shot
-//             if (index === 8) { //9th frame, 3rd shot is 2nd in 10th frame
-//               score = score + 10 + arr[index+1][1];
-//             } else { //frames 1-7
-//               score = score + 10 + arr[index+2][0];
-//             }
-//           } else {
-//             score = score + arr[index+1][0]; //no 2nd strike
-//           }
-//         } 
-//       } else if (frame[0] !== 10 && frame[0] + frame[1] === 10){ //spare
-//         if(index === 9) {//10th frame
-//           score = 10 + frame[2];
-//         } else {
-//           score = 10 + arr[index+1][0];  //add first shot of next frame
-//         }
-//       } else { //no strikes or spares
-//         score = frame[0] + frame[1];
-//       }
-      
-//     return score;
-//   });
-// }
-
   calculateScore (e) {
     
     let value = Number(e.target.value);
@@ -113,7 +73,6 @@ class App extends React.Component {
     let scoreboardClone = [...scoreboard]; 
 
     scoreboardClone[frame][turn] = value;
-    // let scoresPerFrame = this.getTotalScorePerFrame(scoreboardClone);
     
     this.setState({
       frameScore: frameScore + value,
