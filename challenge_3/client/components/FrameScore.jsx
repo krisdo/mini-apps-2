@@ -1,17 +1,12 @@
 import React from 'React';
+
+const FrameScore = ({score, frame}) => (
+
+  <td colSpan="6">
+  {frame <= 10 ?
+    score : null }
+  </td>
  
-const style = {
-  textAlign: "center",
-  verticalAlign: "middle",
-}
-
-const FrameScore = ({score}) => (
-
-  <>
-    <td style={style}>
-      {score}
-    </td>
-  </>
 )
 
 export default FrameScore;

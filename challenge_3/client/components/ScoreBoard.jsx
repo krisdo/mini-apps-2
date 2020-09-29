@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import FrameHeader from './FrameHeader.jsx';
-import FrameScore from './FrameScore.jsx';
-import FrameTurns from './FrameTurns.jsx';
+import Frames from './Frames.jsx';
 import React from 'react';
 
 const style = {
@@ -9,33 +8,27 @@ const style = {
   marginTop: "20px",
   marginLeft: "auto",
   marginRight: "auto",
-  padding: '5px'
+  padding: '5px',
+  width: '500px'
 }
 
 
-    const styleRow = {
-    textAlign: "center",
-    verticalAlign: "middle"
-  }
 
 const ScoreBoard = ({scores, scoresPerFrame}) => (
-
-  <table className={"center"} cellPadding="0" cellSpacing="0" style={style}>
+  <div className="Container">
+  <table id="table" className="ScoreBoard" cellPadding="1" cellSpacing="0" style={style}>
     <thead>
       <tr>
-        {scores.map( (value, index) =><FrameHeader key={uuidv4()} frame={index} />)}
+        {scores.map( (value, index) =><FrameHeader key={uuidv4()} frame={index+1} />)}
       </tr>
     </thead>
     <tbody>
-      <tr>
-        {scores.map( (array, index) => <FrameTurns key={uuidv4()} frame={index} scores={array}/> )}
-      </tr>
-      <tr>
-        {/* {scoresPerFrame && scoresPerFrame.map( (value, index) =><FrameScore key={uuidv4()}  id={index} score={value}/>)} */}
-      </tr>
-
+      
+        <Frames scores={scores}/>
+      
     </tbody>
   </table>
+  </div>
 
 )
 

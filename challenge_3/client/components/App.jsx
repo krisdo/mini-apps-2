@@ -8,22 +8,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scoreboard: [[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0,0], 0],
-      totalScores: [0,0,0,0,0,0,0,0,0,0],
+      scoreboard: [[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0,0], [0]],
       frameScore: 0,
       frame: 0,
       turn: 0
     };
     this.turnNumber = this.turnNumber.bind(this);
     this.calculateScore =  this.calculateScore.bind(this);
-    this.getTotalScorePerFrame = this.getTotalScorePerFrame.bind(this);
     this.disableButton = this.disableButton.bind(this);
      
   }
 
   turnNumber(points) {
 
-    let {turn, frame} = this.state;
+    let {turn, frame, frameScore} = this.state;
     
     if(frame < 9) {
       if(turn < 1) { //one more turn
@@ -37,7 +35,7 @@ class App extends React.Component {
           this.setState({
             turn: this.state.turn+1
           })
-          
+
         }
       } else { //no more turns, next frame
         this.setState({
@@ -46,57 +44,66 @@ class App extends React.Component {
           frameScore: 0
         })
       }
-    } else { //frame 10 has 3 turns
-      if(turn <= 2) {
-      
+    } else { //frame 10 has 3 turns with strikes and spares
+      if (turn === 1) { //spare or stirke on this turn gets one more
+        if(points === 10 || points !== 0 && frameScore === 10) {
+          this.setState({
+            turn: this.state.turn+1
+          })
+        }
+      } else if (turn === 2) { //reset
+        this.setState({
+          turn: 0,
+          frameScore: 0
+        })
+      } else {
         this.setState({
           turn: this.state.turn+1
         })
-      } else {
-
       }
-    }
+     
   }
-
-  getTotalScorePerFrame(array) {
-
-    let scoreboard = array.slice(0, 10);
-
-     return scoreboard.map( (frame, index, arr) => {
-      let score = 0;
-
-      if (frame[0] === 10) { //first strike
-        score = 10;
-        if(index === 9) { //first strike is in 10th frame
-          if (frame[1] === 10) { //2nd strike
-            score = score + 10 + frame[2]; //add all 3 shots in 10th frame
-          } else {
-            score = score + frame[1]; //add only 2nd shot in 10th frame
-          }
-        } else {
-          if (arr[index+1][0] === 10) { //2nd strike then add the 3rd shot
-            if (index === 8) { //9th frame, 3rd shot is 2nd in 10th frame
-              score = score + 10 + arr[index+1][1];
-            } else { //frames 1-7
-              score = score + 10 + arr[index+2][0];
-            }
-          } else {
-            score = score + arr[index+1][0]; //no 2nd strike
-          }
-        } 
-      } else if (frame[0] !== 10 && frame[0] + frame[1] === 10){ //spare
-        if(index === 9) {//10th frame
-          score = 10 + frame[2];
-        } else {
-          score = 10 + arr[index+1][0];  //add first shot of next frame
-        }
-      } else { //no strikes or spares
-        score = frame[0] + frame[1];
-      }
-      
-    return score;
-  });
 }
+
+//   getTotalScorePerFrame(array) {
+
+//     let scoreboard = array.slice(0, 10);
+
+//      return scoreboard.map( (frame, index, arr) => {
+//       let score = 0;
+
+//       if (frame[0] === 10) { //first strike
+//         score = 10;
+//         if(index === 9) { //first strike is in 10th frame
+//           if (frame[1] === 10) { //2nd strike
+//             score = score + 10 + frame[2]; //add all 3 shots in 10th frame
+//           } else {
+//             score = score + frame[1]; //add only 2nd shot in 10th frame
+//           }
+//         } else {
+//           if (arr[index+1][0] === 10) { //2nd strike then add the 3rd shot
+//             if (index === 8) { //9th frame, 3rd shot is 2nd in 10th frame
+//               score = score + 10 + arr[index+1][1];
+//             } else { //frames 1-7
+//               score = score + 10 + arr[index+2][0];
+//             }
+//           } else {
+//             score = score + arr[index+1][0]; //no 2nd strike
+//           }
+//         } 
+//       } else if (frame[0] !== 10 && frame[0] + frame[1] === 10){ //spare
+//         if(index === 9) {//10th frame
+//           score = 10 + frame[2];
+//         } else {
+//           score = 10 + arr[index+1][0];  //add first shot of next frame
+//         }
+//       } else { //no strikes or spares
+//         score = frame[0] + frame[1];
+//       }
+      
+//     return score;
+//   });
+// }
 
   calculateScore (e) {
     
@@ -104,29 +111,17 @@ class App extends React.Component {
     
     let { scoreboard, turn, frame, frameScore } = this.state;
     let scoreboardClone = [...scoreboard]; 
-    console.log('turn', turn);
-    console.log('frame', frame+1);
-    console.log(scoreboard);
 
     scoreboardClone[frame][turn] = value;
-    let scoresPerFrame = this.getTotalScorePerFrame(scoreboardClone);
+    // let scoresPerFrame = this.getTotalScorePerFrame(scoreboardClone);
     
     this.setState({
       frameScore: frameScore + value,
-      scoreboard: scoreboardClone,
-      totalScores: scoresPerFrame
-    }, () =>  console.log({'scoreboard': this.state.scoreboard, "framescore": this.state.frameScore, "totalscores": this.state.totalScores}))
+      scoreboard: scoreboardClone
+    })
    
     this.turnNumber(value); //change turn # and/or frame in state
-    
-    console.log('current', frameScore);
-         
-  }
-
-  points () { //to create an array for the pins button
-    let value = 1;
-    const points = new Array(10).fill(0).map( ea => value++);
-    return points;
+          
   }
 
   disableButton(value, index){

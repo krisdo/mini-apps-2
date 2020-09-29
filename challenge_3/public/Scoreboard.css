@@ -1,0 +1,56 @@
+.Container {
+  display: flex;
+  align-items: center;
+}
+
+table.ScoreBoard {
+  margin: 0 auto;
+  width:80%;
+  font-size:12px;
+  border:1px solid;
+  text-align: center;
+  table-layout: fixed;
+  margin-bottom: 40px;
+}
+
+table.ScoreBoard th, tr, td {
+  padding: 0;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+table.ScoreBoard th {
+  border-bottom:1px solid;
+  background-color:#D3D3D3;
+  height:30px;
+}
+
+table.ScoreBoard th:not(:last-child) {
+  border-right:1px solid;
+}
+
+table.ScoreBoard td {
+  height:30px;
+  background: #F0F8FF;
+}
+
+table.ScoreBoard tr td:not(:last-child) {
+  border-right:1px solid;
+}
+
+table.ScoreBoard tr:nth-child(2) td:nth-child(even) {
+  border-bottom:1px solid;
+}
+
+table.ScoreBoard tr:nth-child(2) td:last-child {
+  border-bottom:1px solid;
+}
+
+table.ScoreBoard #r21 {
+  border-bottom: 1px solid;
+}
+
+table.ScoreBoard #total-score {
+  background-color: #E6E6FA;
+  border-bottom: none;
+}
