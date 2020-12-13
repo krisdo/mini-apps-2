@@ -1,6 +1,6 @@
 # Mini Apps II
 
-A collection of mini apps build from scratch with JavaScript.
+A collection of mini apps built from scratch with JavaScript.
 
 ## Challenge 1 - Historical Events Finder
   Users can do a full-text search through historical events with server-side pagination.
